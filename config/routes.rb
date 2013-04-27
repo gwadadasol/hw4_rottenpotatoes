@@ -14,6 +14,8 @@ Rottenpotatoes::Application.routes.draw do
   #   resources :products
   resources :movies
 
+  match 'show_director' => 'movies', :action => 'show_director', :as => 'show_director', :via => :get
+
   # Sample resource route with options:
   #   resources :products do
   #     member do
