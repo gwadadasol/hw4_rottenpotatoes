@@ -15,9 +15,14 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       begin
-        p "page name: " + page_name
+      #  p "page name: " + page_name
         '/movies'
       end
+    when /^Find Movies With Same Director$/
+      begin
+        '/search_movies_director'
+      end
+
 
     when /^the edit page for \"(.*)\"$/
       begin
@@ -41,7 +46,7 @@ module NavigationHelpers
 
       when /^the Similar Movies page for "Star Wars"/
       begin
-        '/movies'
+        '/search_movies_director'
       end
 
     # Add more mappings here.

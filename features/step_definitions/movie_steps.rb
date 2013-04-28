@@ -12,7 +12,7 @@ Given /the following movies exist/ do |movies_table|
 end
 
 Then /the director of \"(.*)\" should be \"(.*)\"/ do |title, director|
-  p "<<<<<<<<" + title.to_s + "- ---  -" + director.to_s
+#  p "<<<<<<<<" + title.to_s + "- ---  -" + director.to_s
   movie = Movie.where("title like ?",  title)
   movie[0].update_attribute(:director, director)
 end
