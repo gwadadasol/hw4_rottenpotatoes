@@ -5,15 +5,6 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-  #def show_director
-  #  p params[:director]
-  #  director = params[:director]
-
-    # @movies = Movie.where("director like ?",  director)
-    #p '>>>>:' + @movies.size.to_s + "<<<<<"
-    #redirect_to movies_path(@movies)
-  #end
-
 
   def index
     sort = params[:sort] || session[:sort]
@@ -43,23 +34,7 @@ class MoviesController < ApplicationController
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
 
-
-  #  p "director key: " + params.has_key?("director").to_s
-  #  p "directore value: " + params[:director].to_s
-
-#    if (params.has_key?("director") && (!params[:director].nil?))
- #     director = params[:director]
-  #    p "|||||||||||||" + director.to_s
-
-#      @movies = Movie.find_all_by_director(director)
- #     if director.empty?
-  #      flash[:notice] = "'#{@movies[0].title}' has no director info"
-   #   end
-    # p "size : " + @movies.size.to_s
-     # return
-   # else
-      @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
-#    end
+    @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
   end
 
   def new
@@ -91,7 +66,6 @@ class MoviesController < ApplicationController
   end
 
   def search_movies_director
-    #p params.to_s
     director = params[:director]
     if director.nil? || director.empty?
       @movie = Movie.find(params[:id])
