@@ -5,17 +5,19 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-  def show_director
-    p params[:director]
-    director = params[:director]
+  #def show_director
+  #  p params[:director]
+  #  director = params[:director]
 
-    @movies = Movie.where("director like ?",  director)
-    p '>>>>:' + @movies.size.to_s + "<<<<<"
+    # @movies = Movie.where("director like ?",  director)
+    #p '>>>>:' + @movies.size.to_s + "<<<<<"
     #redirect_to movies_path(@movies)
-  end
+  #end
 
 
   def index
+    p "index"
+
     sort = params[:sort] || session[:sort]
     case sort
     when 'title'
@@ -42,7 +44,24 @@ class MoviesController < ApplicationController
       flash.keep
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
-    @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
+
+
+    p "director key: " + params.has_key?("director").to_s
+    p "directore value: " + params[:director].to_s
+
+    if (params.has_key?("director") && (!params[:director].nil?))
+      director = params[:director]
+      p "|||||||||||||" + director.to_s
+
+      @movies = Movie.find_all_by_director(director)
+      if director.empty?
+        flash[:notice] = "'#{@movies[0].title}' has no director info"
+      end
+     p "size : " + @movies.size.to_s
+      return
+    else
+      @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
+    end
   end
 
   def new
@@ -71,6 +90,9 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+
+  def search_movies_director
   end
 
 end
